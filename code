@@ -1,0 +1,48 @@
+题目：
+Given a string, find the length of the longest substring without repeating characters.
+
+Examples:
+
+Given "abcabcbb", the answer is "abc", which the length is 3.
+
+Given "bbbbb", the answer is "b", with the length of 1.
+
+Given "pwwkew", the answer is "wke", with the length of 3. Note that the answer must be a substring,
+
+"pwke" is a subsequence and not a substring.Given a string, find the length of the longest substring without repeating characters.
+
+
+
+给定一个字符串，找到最长子串的长度，而不重复字符。
+
+
+
+代码：
+
+class Solution {  
+public:  
+    int lengthOfLongestSubstring(string s) {  
+        int n = s.length();  
+        int i = 0, j = 0; //i是候选字符串的起点， j是候选字符串的终点。  
+        int max_length = 0;  
+        int cur_length = 0;  
+        bool exist[256] = { false };  
+        while (j < n) {  
+            if (!exist[s[j]]) {  
+                exist[s[j]] = true;  //遍历过，记录为true  
+                j++;  
+            } else {  
+                while(s[i]!= s[j]) {  
+                    exist[s[i]] = false;   
+                    //新候选字串从第一个重复字符(当s[i] == s[j]时候的i)的后一位开始算，之前的i不算，等效于没有被扫描到，所以设为false.  
+                    i++;  
+                }  
+                i++;  
+                j++;  
+            }  
+            cur_length = j - i;  
+            max_length = max_length > cur_length ? max_length : cur_length;  
+        }  
+        return max_length;  
+    }  
+};  
